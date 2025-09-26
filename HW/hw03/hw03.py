@@ -25,6 +25,14 @@ def num_eights(n):
     True
     """
     "*** YOUR CODE HERE ***"
+    if n == 8:
+        return 1
+    elif n < 10:
+        return 0
+    else:
+        return num_eights(n // 10) + num_eights(n % 10)
+        
+
 
 
 def digit_distance(n):
@@ -47,6 +55,10 @@ def digit_distance(n):
     True
     """
     "*** YOUR CODE HERE ***"
+    if n < 10:
+        return 0
+    else:
+        return abs((n // 10 % 10) - n % 10) + digit_distance(n // 10)
 
 
 def interleaved_sum(n, odd_func, even_func):
@@ -71,6 +83,20 @@ def interleaved_sum(n, odd_func, even_func):
     True
     """
     "*** YOUR CODE HERE ***"
+    def odd(m):
+        if m > n:
+            return 0
+        else:
+            return odd_func(m) + even(m + 1)
+    def even(m):
+        if m > n:
+            return 0
+        else:
+            return even_func(m) + odd(m + 1)
+    return odd(1)
+        
+        
+        
 
 
 def next_smaller_dollar(bill):
@@ -85,6 +111,8 @@ def next_smaller_dollar(bill):
         return 5
     elif bill == 5:
         return 1
+    elif bill == 1:
+        return 0
 
 def count_dollars(total):
     """Return the number of ways to make change.
@@ -107,6 +135,34 @@ def count_dollars(total):
     True
     """
     "*** YOUR CODE HERE ***"
+    if total // 100 > 0:
+        pa = 100
+    elif total // 50 > 0:
+        pa = 50
+    elif total // 20 > 0:
+        pa =  20
+    elif total // 10 > 0:
+        pa = 10
+    elif total // 5 > 0:
+        pa = 5
+    elif total // 1 > 0:
+        pa = 1
+    elif total <= 0:
+        return KeyError
+
+    def count(last, part):
+        if last == 0:
+            return 1
+        elif last < 0:
+            return 0
+        elif part == 0:
+            return 0
+        else:
+            with_part = count(last - part, part)
+            without_part = count(last, next_smaller_dollar(part))
+            return with_part + without_part
+    sum = count(total, pa) 
+    return sum
 
 
 def next_larger_dollar(bill):
@@ -121,6 +177,8 @@ def next_larger_dollar(bill):
         return 50
     elif bill == 50:
         return 100
+    elif bill == 100:
+        return 0
 
 def count_dollars_upward(total):
     """Return the number of ways to make change using bills.
@@ -143,7 +201,18 @@ def count_dollars_upward(total):
     True
     """
     "*** YOUR CODE HERE ***"
-
+    def count(last, part):
+        if last == 0:
+            return 1
+        elif last < 0:
+            return 0
+        elif part == 0:
+            return 0
+        else:
+            with_part = count(last - part, part)
+            without_part = count(last, next_larger_dollar(part))
+            return with_part + without_part
+    return count(total, 1)
 
 def print_move(origin, destination):
     """Print instructions to move a disk."""
@@ -178,7 +247,12 @@ def move_stack(n, start, end):
     """
     assert 1 <= start <= 3 and 1 <= end <= 3 and start != end, "Bad start/end"
     "*** YOUR CODE HERE ***"
-
+    if n == 0:
+        return 0
+    else:
+        move_stack(n - 1, start, 6 - start - end)
+        print_move(start, end)
+        move_stack(n - 1, 6 - start - end, end)
 
 from operator import sub, mul
 
@@ -193,5 +267,8 @@ def make_anonymous_factorial():
     ...     ['Assign', 'AnnAssign', 'AugAssign', 'NamedExpr', 'FunctionDef', 'Recursion'])
     True
     """
-    return 'YOUR_EXPRESSION_HERE'
+    return (lambda f: (lambda x: f(lambda v: x(x)(v)))(lambda x: f(lambda v: x(x)(v))))(
+        lambda fact: lambda n: 1 if n == 0 else n * fact(n - 1))
+    
+
 

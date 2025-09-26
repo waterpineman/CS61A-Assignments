@@ -38,6 +38,7 @@ def pick(paragraphs, select, k):
     """
     # BEGIN PROBLEM 1
     "*** YOUR CODE HERE ***"
+    
     # END PROBLEM 1
 
 

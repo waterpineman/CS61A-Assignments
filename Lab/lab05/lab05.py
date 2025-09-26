@@ -27,6 +27,15 @@ def insert_items(s, before, after):
     True
     """
     "*** YOUR CODE HERE ***"
+    i = 0
+    while i < len(s):
+        if s[i] == before:
+            s.insert(i + 1, after)
+            i = i + 2
+        else:
+            i = i + 1
+    return s
+
 
 
 def group_by(s, fn):
@@ -40,12 +49,12 @@ def group_by(s, fn):
     {9: [-3, 3], 4: [-2, 2], 1: [-1, 1], 0: [0]}
     """
     grouped = {}
-    for ____ in ____:
-        key = ____
+    for a in s:
+        key = fn(a)
         if key in grouped:
-            ____
+            grouped[key] = grouped[key] + [a]
         else:
-            grouped[key] = ____
+            grouped[key] = [a] 
     return grouped
 
 
@@ -71,6 +80,14 @@ def count_occurrences(t, n, x):
     2
     """
     "*** YOUR CODE HERE ***"
+    i = 0
+    count = 0
+    while i < n:
+        m = next(t)
+        if m == x:
+            count = count + 1
+        i = i + 1
+    return count
 
 
 def repeated(t, k):
@@ -94,6 +111,18 @@ def repeated(t, k):
     """
     assert k > 1
     "*** YOUR CODE HERE ***"
+    n = next(t)
+    l = k
+    while l != 1:
+        m = n
+        n = next(t)
+        if m == n:
+            l = l - 1
+        else:
+            l = k
+    return n
+        
+
 
 
 def sprout_leaves(t, leaves):
@@ -130,7 +159,12 @@ def sprout_leaves(t, leaves):
           2
     """
     "*** YOUR CODE HERE ***"
-
+    if is_leaf(t):
+       new_branches = [tree(leaf) for leaf in leaves]
+       return tree(label(t), new_branches)
+    else:
+        new_branches = [sprout_leaves(b, leaves) for b in branches(t) ]
+        return tree(label(t), new_branches)
 
 def partial_reverse(s, start):
     """Reverse part of a list in-place, starting with start up to the end of
@@ -145,6 +179,17 @@ def partial_reverse(s, start):
     [1, 2, 7, 6, 5, 3, 4]
     """
     "*** YOUR CODE HERE ***"
+    for i in range(len(s)):
+        if s[i] == start:
+            start = i + 1
+            break
+    left = start
+    right = len(s) - 1
+    while left < right:
+        s[left], s[right] = s[right], s[left]
+        left += 1
+        right -= 1 
+    
 
 
 
