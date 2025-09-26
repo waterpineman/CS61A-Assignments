@@ -57,6 +57,7 @@ class VendingMachine:
         E.g., Current candy stock: 3
         """
         "*** YOUR CODE HERE ***"
+        
 
     def add_funds(self, n):
         """If the machine is out of stock, return a message informing the user to restock
