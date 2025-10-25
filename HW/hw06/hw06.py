@@ -50,6 +50,10 @@ class VendingMachine:
     def __init__(self, product, price):
         """Set the product and its price, as well as other instance attributes."""
         "*** YOUR CODE HERE ***"
+        self.product = product
+        self.price = price
+        self.stock = 0
+        self.funds = 0
 
     def restock(self, n):
         """Add n to the stock and return a message about the updated stock level.
@@ -57,7 +61,8 @@ class VendingMachine:
         E.g., Current candy stock: 3
         """
         "*** YOUR CODE HERE ***"
-        
+        self.stock += n
+        return 
 
     def add_funds(self, n):
         """If the machine is out of stock, return a message informing the user to restock
